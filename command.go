@@ -555,17 +555,8 @@ func (c *Command) execute(a []string) (err error) {
 	if err != nil {
 		return err
 	}
-	// If help is called, regardless of other flags, return we want help
-	// Also say we need help if the command isn't runnable.
-	helpVal, err := c.Flags().GetBool("help")
-	if err != nil {
-		// should be impossible to get here as we always declare a help
-		// flag in initHelpFlag()
-		c.Println("\"help\" flag declared as non-bool. Please correct your code")
-		return err
-	}
 
-	if helpVal || !c.Runnable() {
+	if !c.Runnable() {
 		return flag.ErrHelp
 	}
 
